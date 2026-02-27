@@ -17,25 +17,6 @@ const signup = catchError(async (req, res) => {
     res.json({ message: "success" })
 })
 
-//signin
-// const signin = catchError(async (req:Request, res:Response, next:NextFunction) => {
-//     const { email, password } = req.body
-//     const user = await User.findOne({ email })
-//     if (!user) return next(new AppError('user not found', 401))
-//     const isPasswordCorrect =await bcrypt.compare(password,user.password);
-//     if (isPasswordCorrect) {
-//         let token = jwt.sign({userId: user._id, email: user.email, name: user.name },"ChatNowSecretKey", { expiresIn: '1d' })
-//         res.cookie('token', token, {
-//             httpOnly: true,   
-//             secure:false, // في التطوير خليها false، في الإنتاج خليها true
-//             sameSite: 'lax', 
-//             path: '/',
-//             maxAge: 24 * 60 * 60 * 1000  ,   
-//         })
-//         return res.status(200).json({ message: "success" });
-//     }
-//     return next(new AppError('incorrect email or password ', 401))
-// })
 
 
 const signin = catchError(async (req: Request, res: Response, next: NextFunction) => {
@@ -53,15 +34,17 @@ const signin = catchError(async (req: Request, res: Response, next: NextFunction
 
     res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: 'lax',
-        maxAge: 24 * 60 * 60 * 1000
+        secure:true, 
+        sameSite: 'none',
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/' 
     });
  res.cookie('userId', user._id.toString(), {
         httpOnly: false, // هامة جداً لكي يراها الفرونت إند
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         sameSite: 'lax',
-        maxAge: 24 * 60 * 60 * 1000
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/' 
     });
     res.status(200).json({ 
         message: "success", 
@@ -75,7 +58,7 @@ const logout = catchError((req:Request, res:any) => {
     res.clearCookie('token', {
         httpOnly: true,
         secure:true,
-        sameSite: 'lax',
+        sameSite: 'none',
         path: '/',
     });
     return res.json({ message: 'Logged out successfully' })
