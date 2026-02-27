@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.json());
 // إعداد CORS للـ Express
 app.use(cors({
-  origin: "https://chat-now-orpin.vercel.app",
+  origin: "https://chat-now-git-main-mahmouds-projects-90220037.vercel.app",
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // ضروري للسماح بالكوكيز
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -33,7 +33,7 @@ app.use(imgRouter)
 app.use('/uploads', express.static('uploads'));
 const io = new Server(server, {
   cors: {
-    origin: "https://chat-now-orpin.vercel.app",
+    origin: "https://chat-now-git-main-mahmouds-projects-90220037.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // ضروري للسماح بالكوكيز
     allowedHeaders: ['Content-Type', 'Authorization']
