@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
     console.log('👋 User Disconnected');
   });
 });
-
+app.get('/', (req, res) => res.send('OK'));
 
 
 dbConnections();

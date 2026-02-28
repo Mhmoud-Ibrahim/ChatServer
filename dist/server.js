@@ -2,7 +2,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import express from 'express';
 import { dbConnections } from './db/dbConnections.js';
-import cookieParser from 'cookie-parser'; // 👈 استيراد المكتبة
+import cookieParser from 'cookie-parser';
 import { registerChatHandlers } from './src/modules/socket/chatHandler.js';
 import { AppError } from './src/utils/appError.js';
 import globalErrorHandler from './src/middleware/globalError.js';
@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(express.json());
 // إعداد CORS للـ Express
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://chat-now-git-main-mahmouds-projects-90220037.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // ضروري للسماح بالكوكيز
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -23,15 +23,15 @@ app.use(cors({
 const server = http.createServer(app);
 app.use('/auth', userRouter);
 app.use(imgRouter);
-app.use('/uploads', express.static('uploads'));
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: "https://chat-now-git-main-mahmouds-projects-90220037.vercel.app",
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true, // ضروري للسماح بالكوكيز
         allowedHeaders: ['Content-Type', 'Authorization']
     }
 });
+app.use('/uploads', express.static('uploads'));
 io.use(socketAuth);
 io.on('connection', (socket) => {
     console.log(`🚀 User Authenticated: ${socket.data.userId} (Socket ID: ${socket.id})`);
@@ -40,6 +40,7 @@ io.on('connection', (socket) => {
         console.log('👋 User Disconnected');
     });
 });
+app.get('/', (req, res) => res.send('OK'));
 dbConnections();
 app.all(/(.*)/, (req, res, next) => {
     next(new AppError(`Route ${req.originalUrl} Not Found`, 404));
