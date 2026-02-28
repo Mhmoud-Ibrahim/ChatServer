@@ -5,9 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+  
      "start": "/",
-    "dev": "concurrently \"tsc -w\" \"nodemon dist/server.js\""
+    "dev": "tsc -w && nodemon dist/index.js"
   },
   "engines": {
      "node": "24.x"
