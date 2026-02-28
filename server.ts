@@ -5,7 +5,7 @@ import { Server } from 'socket.io';
 import express from 'express';
 import type { Application, NextFunction, Request, Response } from 'express';
 import { dbConnections } from './db/dbConnections.js';
-import cookieParser from 'cookie-parser'; // 👈 استيراد المكتبة
+import cookieParser from 'cookie-parser'; 
 
 
 import { registerChatHandlers } from './src/modules/socket/chatHandler.js';
@@ -30,7 +30,6 @@ app.use(cors({
 const server = http.createServer(app);
 app.use('/auth', userRouter);
 app.use(imgRouter)
-app.use('/uploads', express.static('uploads'));
 const io = new Server(server, {
   cors: {
     origin: "https://chat-now-git-main-mahmouds-projects-90220037.vercel.app",
@@ -40,6 +39,7 @@ const io = new Server(server, {
   }
 });
 
+app.use('/uploads', express.static('uploads'));
 io.use(socketAuth);
 io.on('connection', (socket) => {
   console.log(`🚀 User Authenticated: ${socket.data.userId} (Socket ID: ${socket.id})`);

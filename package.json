@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
+     "start": "/",
     "dev": "concurrently \"tsc -w\" \"nodemon dist/server.js\""
   },
   "engines": {
