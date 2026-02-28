@@ -28,7 +28,7 @@ const signin = catchError(async (req: Request, res: Response, next: NextFunction
     }
     const token = jwt.sign(
         { userId: user._id },
-        process.env.JWT_SECRET || "ChatNowSecretKey", 
+        process.env.JWT_KEY || "ChatNowSecretKey", 
         { expiresIn: '1d' }
     );
 
@@ -42,7 +42,7 @@ const signin = catchError(async (req: Request, res: Response, next: NextFunction
  res.cookie('userId', user._id.toString(), {
         httpOnly: false, // هامة جداً لكي يراها الفرونت إند
         secure: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         maxAge: 24 * 60 * 60 * 1000,
         path: '/' 
     });
@@ -56,6 +56,12 @@ const signin = catchError(async (req: Request, res: Response, next: NextFunction
 
 const logout = catchError((req:Request, res:any) => {
     res.clearCookie('token', {
+        httpOnly: true,
+        secure:true,
+        sameSite: 'none',
+        path: '/',
+    });
+    res.clearCookie('userId', {
         httpOnly: true,
         secure:true,
         sameSite: 'none',

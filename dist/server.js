@@ -46,7 +46,7 @@ app.all(/(.*)/, (req, res, next) => {
     next(new AppError(`Route ${req.originalUrl} Not Found`, 404));
 });
 app.use(globalErrorHandler);
-const port = 3000;
+const port = process.env.PORT || 3000;
 server.listen(port, () => {
     console.log(` Server running on http://localhost:${port}`);
 });
